@@ -65,7 +65,6 @@ This README reflects:
 Chuks Kitchen Backend Design Documentation  
 
 1. System Overview (End-to-End)
-===============================
 
 Chuks Kitchen currently supports:
 
@@ -76,7 +75,6 @@ Admin (simulated): creates food items using admin header validation (`x-admin: t
 End-to-end Journey
 
 Customer Registration
-=====================
 
 A user signs up using Email or Phone and a password (with optional first/last name and role).
 
@@ -85,30 +83,24 @@ System creates the account in unverified OTP state, stores OTP hash/expiry, and 
 Note: JWT token is also returned at signup.
 
 Account Verification
-=====================
 
 User submits OTP using `userId`.
 
 System validates OTP hash, marks account verified, clears OTP fields, and issues a JWT token.
 
 Food Browsing
-=============
 
 Customer requests the food list via `GET /auth/foods`.
 
 Backend returns foods from the database sorted by newest first.
 
 Admin Food Management
-=====================
 
 Admin adds food items via `POST /auth/foods` with header `x-admin: true`.
 
-
 2. Flow Explanation (Step-by-Step + Design Reasons)
-===================================================
 
 A) User Registration & OTP Verification Flow
-============================================
 
 Step 1: Submit Signup
 
@@ -149,7 +141,6 @@ Backend fetches user by `userId`, checks OTP hash match, sets `otpVerified = tru
 Why: OTP should be one-time use and removed after success.
 
 B) Food Browsing & Admin Food Management Flow
-==============================================
 
 Customer
 
@@ -159,9 +150,7 @@ Backend returns foods sorted by newest.
 
 Why: Simple meal browsing endpoint.
 
-
-Admin
-=================
+Admin (simulated)
 
 Frontend calls: `POST /auth/foods`
 
@@ -171,12 +160,9 @@ Backend creates food `{name, price, isAvailable}`.
 
 Why: Restricts create access to simulated admin flow.
 
-
 3. Edge Case Handling (Failures, Exceptions, Unusual Scenarios)
-===============================================================
 
 Registration & Verification
-===========================
 
 Duplicate email/phone: `409 Conflict`
 
@@ -189,14 +175,12 @@ Invalid OTP: `400 Bad Request`
 User not found during OTP verification: `404 Not Found`
 
 Food
-=====
 
 Non-admin trying to create food: `403 Forbidden`
 
 Unexpected server/database errors: `500 Internal Server Error`
 
 4. Assumptions (Due to Missing Info)
-====================================
 
 OTP is exposed in non-production signup response for testing.
 
@@ -208,14 +192,11 @@ OTP expiry fields exist, but expiry enforcement is not yet implemented in verify
 
 Cart and order APIs are not implemented yet.
 
-
 5. Scalability Thoughts (100 → 10,000+ Users)
-=============================================
 
 If usage grows, first upgrades should include:
 
 Performance & Data
-==================
 
 a) Add/maintain DB indexes: `User.email`, `User.phone`. (currently used in OTP verification lookups).
 b) Add pagination to `GET /auth/foods` with `page` and `limit` plus a max `limit` cap: `GET /auth/foods?page=1&limit=20`.
@@ -226,7 +207,6 @@ f) Add centralized request validation (e.g., AJV middleware) before controller/d
 g) Run multiple API instances behind a load balancer (stateless JWT supports horizontal scaling).
 
 OTP & Notifications
-===================
 
 Move OTP delivery to a background job queue (e.g., BullMQ + Redis) for better latency and retries.
 
