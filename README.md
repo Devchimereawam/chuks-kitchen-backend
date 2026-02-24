@@ -184,7 +184,7 @@ Cart and order APIs are not implemented yet.
 
 If usage grows, first upgrades should include:
 
-## Performance & Data
+### Performance & Data
 
 1. Add/maintain DB indexes: `User.email`, `User.phone`. (currently used in OTP verification lookups).
 2. Add pagination to `GET /auth/foods` with `page` and `limit` plus a max `limit` cap: `GET /auth/foods?page=1&limit=20`.
