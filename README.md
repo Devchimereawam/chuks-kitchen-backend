@@ -1,4 +1,4 @@
-<img width="669" height="267" alt="Screenshot 2026-02-24 at 12 16 02" src="https://github.com/user-attachments/assets/035a0df4-43b0-4185-8655-2c018c9fc409" /># Chuks Kitchen Backend
+# Chuks Kitchen Backend
 
 ## Project Status
 
