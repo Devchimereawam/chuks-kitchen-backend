@@ -94,7 +94,7 @@ Customer requests the food list via `GET /auth/foods`.
 
 Backend returns foods from the database sorted by newest first.
 
-Admin Food Management
+## Admin Food Management
 
 Admin adds food items via `POST /auth/foods` with header `x-admin: true`.
 
@@ -102,7 +102,7 @@ Admin adds food items via `POST /auth/foods` with header `x-admin: true`.
 
 ## A) User Registration & OTP Verification Flow
 
-Step 1: Submit Signup
+## Step 1: Submit Signup
 
 Frontend sends: `POST /auth/signup` with `{email OR phone, password, firstName?, lastName?, role?}`
 
@@ -110,7 +110,7 @@ Backend normalizes/validates role, checks admin-role simulation rule, and procee
 
 Why: Backend controls identity and role constraints.
 
-Step 2: Duplicate Check
+## Step 2: Duplicate Check
 
 Backend checks if email/phone already exists.
 
@@ -118,7 +118,7 @@ If yes: returns `409`.
 
 Why: Prevents account collisions.
 
-Step 3: Create Unverified User
+## Step 3: Create Unverified User
 
 Backend creates user with OTP fields initialized and `otpVerified = false`.
 
@@ -126,13 +126,13 @@ Password is hashed before save.
 
 Why: Keeps user unverified until OTP confirmation.
 
-Step 4: Generate OTP
+## Step 4: Generate OTP
 
 Backend generates OTP, stores OTP hash and expiry, and includes OTP in non-production response.
 
 Why: Hashing/expiry improve OTP safety; non-production OTP exposure supports testing.
 
-Step 5: Verify OTP
+## Step 5: Verify OTP
 
 Frontend sends: `POST /auth/signup/verify-otp` with `{userId, otp}`
 
@@ -142,7 +142,7 @@ Why: OTP should be one-time use and removed after success.
 
 ## B) Food Browsing & Admin Food Management Flow
 
-Customer
+## Customer
 
 Frontend calls: `GET /auth/foods`
 
@@ -150,7 +150,7 @@ Backend returns foods sorted by newest.
 
 Why: Simple meal browsing endpoint.
 
-Admin (simulated)
+## Admin (simulated)
 
 Frontend calls: `POST /auth/foods`
 
@@ -162,7 +162,7 @@ Why: Restricts create access to simulated admin flow.
 
 ## 3. Edge Case Handling (Failures, Exceptions, Unusual Scenarios)
 
-Registration & Verification
+## Registration & Verification
 
 Duplicate email/phone: `409 Conflict`
 
@@ -174,7 +174,7 @@ Invalid OTP: `400 Bad Request`
 
 User not found during OTP verification: `404 Not Found`
 
-Food
+## Food
 
 Non-admin trying to create food: `403 Forbidden`
 
@@ -196,21 +196,21 @@ Cart and order APIs are not implemented yet.
 
 If usage grows, first upgrades should include:
 
-Performance & Data
+## Performance & Data
 
-a) Add/maintain DB indexes: `User.email`, `User.phone`. (currently used in OTP verification lookups).
-b) Add pagination to `GET /auth/foods` with `page` and `limit` plus a max `limit` cap: `GET /auth/foods?page=1&limit=20`.
+1. Add/maintain DB indexes: `User.email`, `User.phone`. (currently used in OTP verification lookups).
+2. Add pagination to `GET /auth/foods` with `page` and `limit` plus a max `limit` cap: `GET /auth/foods?page=1&limit=20`.
 c) Add `Food` indexes for list/query speed (for example `isAvailable`, `createdAt`, or a compound index).
 d) Add Redis caching for `GET /auth/foods` and invalidate cache on food create/update.
 e) Add rate limiting for signup and OTP verification endpoints to reduce abuse and burst load.
 f) Add centralized request validation (e.g., AJV middleware) before controller/database logic.
 g) Run multiple API instances behind a load balancer (stateless JWT supports horizontal scaling).
 
-OTP & Notifications
+## OTP & Notifications
 
 Move OTP delivery to a background job queue (e.g., BullMQ + Redis) for better latency and retries.
 
-Reliability & Security
+## Reliability & Security
 
 Add rate limiting for signup and OTP verification endpoints to reduce abuse and burst load. (Rate-limit verification attempts).
 
