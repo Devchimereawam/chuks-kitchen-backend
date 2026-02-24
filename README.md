@@ -1,4 +1,4 @@
-# Chuks Kitchen Backend
+<img width="669" height="267" alt="Screenshot 2026-02-24 at 12 16 02" src="https://github.com/user-attachments/assets/035a0df4-43b0-4185-8655-2c018c9fc409" /># Chuks Kitchen Backend
 
 ## Project Status
 
@@ -8,20 +8,9 @@ This README reflects:
 2. The API **design documentation**.
 
 ## Current Codebase Structure
-.
-├── app.js
-├── authorization
-│   ├── controller.js
-│   └── routes.js
-├── common
-│   ├── database.js
-│   ├── middlewares
-│   │   └── IsAuthenticated.js
-│   └── models
-│       ├── Food.js
-│       └── User.js
-├── package.json
-└── README.md
+
+<img width="669" height="267" alt="Screenshot 2026-02-24 at 12 16 02" src="https://github.com/user-attachments/assets/a71a3295-0593-450a-af41-054c33df87c2" />
+
 
 ## Current Implemented Endpoints
 
@@ -29,6 +18,7 @@ This README reflects:
 
 - `GET /`
   - Returns a plain text API running message.
+
 - `GET /status`
   - Returns backend status JSON.
 
