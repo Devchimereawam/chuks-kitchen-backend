@@ -1,4 +1,4 @@
-## Chuks Kitchen Backend
+# Chuks Kitchen Backend
 
 ## Project Status
 
@@ -72,9 +72,9 @@ Customer: signs up, verifies account via OTP, browses foods.
 
 Admin (simulated): creates food items using admin header validation (`x-admin: true`).
 
-## End-to-end Journey
+### End-to-end Journey
 
-## Customer Registration
+### Customer Registration
 
 A user signs up using Email or Phone and a password (with optional first/last name and role).
 
@@ -82,27 +82,27 @@ System creates the account in unverified OTP state, stores OTP hash/expiry, and 
 
 Note: JWT token is also returned at signup.
 
-## Account Verification
+#### Account Verification
 
 User submits OTP using `userId`.
 
 System validates OTP hash, marks account verified, clears OTP fields, and issues a JWT token.
 
-## Food Browsing
+### Food Browsing
 
 Customer requests the food list via `GET /auth/foods`.
 
 Backend returns foods from the database sorted by newest first.
 
-## Admin Food Management
+### Admin Food Management
 
 Admin adds food items via `POST /auth/foods` with header `x-admin: true`.
 
 ## 2. Flow Explanation (Step-by-Step + Design Reasons)
 
-## A) User Registration & OTP Verification Flow
+### A) User Registration & OTP Verification Flow
 
-## Step 1: Submit Signup
+#### Step 1: Submit Signup
 
 Frontend sends: `POST /auth/signup` with `{email OR phone, password, firstName?, lastName?, role?}`
 
@@ -110,7 +110,7 @@ Backend normalizes/validates role, checks admin-role simulation rule, and procee
 
 Why: Backend controls identity and role constraints.
 
-## Step 2: Duplicate Check
+#### Step 2: Duplicate Check
 
 Backend checks if email/phone already exists.
 
@@ -118,7 +118,7 @@ If yes: returns `409`.
 
 Why: Prevents account collisions.
 
-## Step 3: Create Unverified User
+#### Step 3: Create Unverified User
 
 Backend creates user with OTP fields initialized and `otpVerified = false`.
 
@@ -126,13 +126,13 @@ Password is hashed before save.
 
 Why: Keeps user unverified until OTP confirmation.
 
-## Step 4: Generate OTP
+#### Step 4: Generate OTP
 
 Backend generates OTP, stores OTP hash and expiry, and includes OTP in non-production response.
 
 Why: Hashing/expiry improve OTP safety; non-production OTP exposure supports testing.
 
-## Step 5: Verify OTP
+#### Step 5: Verify OTP
 
 Frontend sends: `POST /auth/signup/verify-otp` with `{userId, otp}`
 
@@ -140,9 +140,9 @@ Backend fetches user by `userId`, checks OTP hash match, sets `otpVerified = tru
 
 Why: OTP should be one-time use and removed after success.
 
-## B) Food Browsing & Admin Food Management Flow
+### B) Food Browsing & Admin Food Management Flow
 
-## Customer
+#### Customer
 
 Frontend calls: `GET /auth/foods`
 
@@ -150,7 +150,7 @@ Backend returns foods sorted by newest.
 
 Why: Simple meal browsing endpoint.
 
-## Admin (simulated)
+#### Admin (simulated)
 
 Frontend calls: `POST /auth/foods`
 
@@ -162,7 +162,7 @@ Why: Restricts create access to simulated admin flow.
 
 ## 3. Edge Case Handling (Failures, Exceptions, Unusual Scenarios)
 
-## Registration & Verification
+### Registration & Verification
 
 Duplicate email/phone: `409 Conflict`
 
@@ -174,7 +174,7 @@ Invalid OTP: `400 Bad Request`
 
 User not found during OTP verification: `404 Not Found`
 
-## Food
+### Food
 
 Non-admin trying to create food: `403 Forbidden`
 
@@ -200,17 +200,17 @@ If usage grows, first upgrades should include:
 
 1. Add/maintain DB indexes: `User.email`, `User.phone`. (currently used in OTP verification lookups).
 2. Add pagination to `GET /auth/foods` with `page` and `limit` plus a max `limit` cap: `GET /auth/foods?page=1&limit=20`.
-c) Add `Food` indexes for list/query speed (for example `isAvailable`, `createdAt`, or a compound index).
-d) Add Redis caching for `GET /auth/foods` and invalidate cache on food create/update.
-e) Add rate limiting for signup and OTP verification endpoints to reduce abuse and burst load.
-f) Add centralized request validation (e.g., AJV middleware) before controller/database logic.
-g) Run multiple API instances behind a load balancer (stateless JWT supports horizontal scaling).
+3. Add `Food` indexes for list/query speed (for example `isAvailable`, `createdAt`, or a compound index).
+4. Add Redis caching for `GET /auth/foods` and invalidate cache on food create/update.
+5. Add rate limiting for signup and OTP verification endpoints to reduce abuse and burst load.
+6. Add centralized request validation (e.g., AJV middleware) before controller/database logic.
+7. Run multiple API instances behind a load balancer (stateless JWT supports horizontal scaling).
 
-## OTP & Notifications
+### OTP & Notifications
 
 Move OTP delivery to a background job queue (e.g., BullMQ + Redis) for better latency and retries.
 
-## Reliability & Security
+### Reliability & Security
 
 Add rate limiting for signup and OTP verification endpoints to reduce abuse and burst load. (Rate-limit verification attempts).
 
