@@ -38,4 +38,5 @@ const USER_ROLES = Object.freeze({
 //     }
 // };
 
-module.exports = { authorize, OTP_CONFIG, USER_ROLES };
+// Export authorize when implemented.
+module.exports = { OTP_CONFIG, USER_ROLES };
