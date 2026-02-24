@@ -48,8 +48,6 @@ This README reflects:
   - `GET /orders/:id`
 - Admin order status update APIs.
 
-
-
 ## Chuks Kitchen Backend Design Documentation
 
 Chuks Kitchen Backend Design Documentation  
@@ -62,7 +60,7 @@ Customer: signs up, verifies account via OTP, browses foods.
 
 Admin (simulated): creates food items using admin header validation (`x-admin: true`).
 
-### End-to-end Journey
+## End-to-end Journey
 
 ### Customer Registration
 
@@ -72,7 +70,7 @@ System creates the account in unverified OTP state, stores OTP hash/expiry, and 
 
 Note: JWT token is also returned at signup.
 
-#### Account Verification
+### Account Verification
 
 User submits OTP using `userId`.
 
@@ -92,7 +90,7 @@ Admin adds food items via `POST /auth/foods` with header `x-admin: true`.
 
 ### A) User Registration & OTP Verification Flow
 
-#### Step 1: Submit Signup
+### Step 1: Submit Signup
 
 Frontend sends: `POST /auth/signup` with `{email OR phone, password, firstName?, lastName?, role?}`
 
@@ -100,7 +98,7 @@ Backend normalizes/validates role, checks admin-role simulation rule, and procee
 
 Why: Backend controls identity and role constraints.
 
-#### Step 2: Duplicate Check
+### Step 2: Duplicate Check
 
 Backend checks if email/phone already exists.
 
@@ -108,7 +106,7 @@ If yes: returns `409`.
 
 Why: Prevents account collisions.
 
-#### Step 3: Create Unverified User
+### Step 3: Create Unverified User
 
 Backend creates user with OTP fields initialized and `otpVerified = false`.
 
@@ -116,13 +114,13 @@ Password is hashed before save.
 
 Why: Keeps user unverified until OTP confirmation.
 
-#### Step 4: Generate OTP
+### Step 4: Generate OTP
 
 Backend generates OTP, stores OTP hash and expiry, and includes OTP in non-production response.
 
 Why: Hashing/expiry improve OTP safety; non-production OTP exposure supports testing.
 
-#### Step 5: Verify OTP
+### Step 5: Verify OTP
 
 Frontend sends: `POST /auth/signup/verify-otp` with `{userId, otp}`
 
@@ -132,7 +130,7 @@ Why: OTP should be one-time use and removed after success.
 
 ### B) Food Browsing & Admin Food Management Flow
 
-#### Customer
+### Customer
 
 Frontend calls: `GET /auth/foods`
 
@@ -140,7 +138,7 @@ Backend returns foods sorted by newest.
 
 Why: Simple meal browsing endpoint.
 
-#### Admin (simulated)
+### Admin (simulated)
 
 Frontend calls: `POST /auth/foods`
 
