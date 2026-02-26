@@ -241,6 +241,14 @@ Add rate limiting for signup and OTP verification endpoints to reduce abuse and 
 
 Add observability: structured logs, latency metrics, error-rate monitoring, and alerts.
 
+## Data Modeling (ERD)
+
+<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVG6BwKzI=/?embedMode=view_only_without_ui&moveToViewport=-833,-859,2065,1110&embedId=633000995513" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+
+### Miro Link:
+
+https://miro.com/app/live-embed/uXjVG6BwKzI=/?embedMode=view_only_without_ui&moveToViewport=-833%2C-859%2C2065%2C1110&embedId=633000995513
+
 ## Project Images
 
 <img width="1161" height="548" alt="Screenshot 2026-02-26 at 09 36 49" src="https://github.com/user-attachments/assets/0d45be98-4482-42a8-bdcd-b1ffafa4fed9" />
