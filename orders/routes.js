@@ -184,4 +184,70 @@ router.delete('/clear-cart/:userId', async (req, res) => {
     }
 });
 
+// Option C - Create order from cart
+router.post('/orders', async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ success: false, error: 'userId is required.' });
+        }
+
+        const user = await findUser(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'User not found.' });
+        }
+
+        if (!user.otpVerified) {
+            return res.status(403).json({
+                success: false,
+                error: 'User must be verified before ordering.'
+            });
+        }
+
+        const cart = await findActiveCart(user.id);
+        if (!cart || cart.items.length === 0) {
+            return res.status(400).json({ success: false, error: 'Cart is empty.' });
+        }
+
+        const now = new Date().toISOString();
+        cart.status = 'placed';
+        cart.placedAt = now;
+        cart.updatedAt = now;
+        await cart.save();
+
+        return res.status(201).json({
+            success: true,
+            message: 'Order created successfully.',
+            data: toOrderView(cart)
+        });
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// Option C - Fetch order details & status
+router.get('/orders/:id', async (req, res) => {
+    try {
+        const orderId = String(req.params.id).trim();
+
+        if (!mongoose.Types.ObjectId.isValid(orderId)) {
+            return res.status(404).json({ success: false, error: 'Order not found.' });
+        }
+
+        const order = await Order.findById(orderId);
+        if (!order || order.status === 'cart') {
+            return res.status(404).json({ success: false, error: 'Order not found.' });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Order fetched successfully.',
+            data: toOrderView(order)
+        });
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 module.exports = router;
