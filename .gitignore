@@ -4,3 +4,4 @@ npm-debug.log*
 .env.local
 .env.development
 .env.production
+txt.md

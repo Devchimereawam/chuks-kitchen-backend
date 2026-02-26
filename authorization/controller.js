@@ -83,8 +83,6 @@ exports.register = async (req, res) => {
             otpVerified: false
         });
 
-        const accessToken = generateAccessToken(user.id, user.email, user.phone, user.role);
-
         const responseBody = {
             success: true,
             message: 'Signup successful. Verify OTP to complete account verification.',
@@ -98,8 +96,7 @@ exports.register = async (req, res) => {
                 role: user.role,
                 timestamp: user.timestamp,
                 otpVerified: user.otpVerified
-            },
-            token: accessToken
+            }
         };
 
         // If app is not running in production, include OTP in API response so it can be used for manual testing/verification. In production, OTP is hidden.
@@ -143,7 +140,7 @@ exports.verifySignupOtp = async (req, res) => {
         const accessToken = generateAccessToken(user.id, user.email, user.phone, user.role);
 
         return res.status(200).json({
-            sucess: true,
+            success: true,
             message: 'OTP verified successfully.',
             token: accessToken
         });

@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./common/database');
 const authRoutes = require('./authorization/routes');
+const orderRoutes = require('./orders/routes');
 const User = require('./common/models/User');
 
 // Load Environment Variables
@@ -22,6 +23,7 @@ app.get('/status', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/auth', orderRoutes);
 
 // Connect using the enviroment port or default to 3000
 const PORT = process.env.PORT || 3000;

@@ -37,15 +37,21 @@ This README reflects:
   - Creates a food item.
   - Requires request header: `x-admin: true`.
 
+### Cart and Order
+
+- `POST /cart/items`
+  - Adds meal to cart.
+- `GET /cart/:userId`
+  - Fetches cart details.
+- `POST /orders`
+  - Creates order from active cart.
+- `GET /orders/:id`
+  - Fetches order details and status.
+- `DELETE /clear-cart/:userId`
+  - Clears active cart items.
+
 ## Not Implemented Yet
 
-- Cart APIs:
-  - `POST /cart/items`
-  - `GET /cart/:userId`
-  - `DELETE /clear-cart/:userId`
-- Order APIs:
-  - `POST /orders`
-  - `GET /orders/:id`
 - Admin order status update APIs.
 
 ## Chuks Kitchen Backend Design Documentation
@@ -148,6 +154,32 @@ Backend creates food `{name, price, isAvailable}`.
 
 Why: Restricts create access to simulated admin flow.
 
+### C) Cart and Order Flow Reorder (Instruction vs Final)
+
+Initial instruction order captured during API planning:
+
+- Option C — Order API:
+  - `/orders` Create order from cart
+  - `/orders/:id` Fetch order details and status
+- Option D — Add meal to cart API:
+  - `/orders` Add meal to cart
+- Option E — View cart API:
+  - `/orders/:id` Fetch order details and status
+- Option F — Clear cart API:
+  - `/clear cart`
+
+Final reordered and implemented flow:
+
+- Option D — Add meal to cart API:
+  - `POST /cart/items`
+- Option E — View cart API:
+  - `GET /cart/:userId`
+- Option C — Order API:
+  - `POST /orders` Create order from cart
+  - `GET /orders/:id` Fetch order details and status
+- Option F — Clear cart API:
+  - `DELETE /clear-cart/:userId`
+
 ## 3. Edge Case Handling (Failures, Exceptions, Unusual Scenarios)
 
 ### Registration & Verification
@@ -178,7 +210,7 @@ Admin checks are currently simulated using `x-admin` header.
 
 OTP expiry fields exist, but expiry enforcement is not yet implemented in verify flow.
 
-Cart and order APIs are not implemented yet.
+Cart and order APIs are implemented using the reordered route flow documented above.
 
 ## 5. Scalability Thoughts (100 → 10,000+ Users)
 
