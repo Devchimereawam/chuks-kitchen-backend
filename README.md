@@ -1,11 +1,16 @@
 # Chuks Kitchen Backend
 
-## Project Status
+## Project Status & Documentation Scope
 
-This README reflects:
+This README represents a comprehensive and authoritative reflection of:
 
-1. The **current codebase structure** in this repo.
-2. The API **design documentation**.
+1. The current codebase structure as implemented in this repository.
+
+2. The officially documented API design architecture and behavioral flows.
+
+3. The reconciled implementation decisions that emerged during the API planning and development lifecycle.
+
+This document serves both as a technical reference and as an architectural explanation of design decisions, implementation trade-offs, and forward-looking scalability considerations.
 
 ## Current Codebase Structure
 
@@ -41,13 +46,13 @@ This README reflects:
 
 - `POST /cart/items`
   - Adds meal to cart.
-- `GET /cart/:userId`
+- `GET /cart/:id`
   - Fetches cart details.
 - `POST /orders`
   - Creates order from active cart.
 - `GET /orders/:id`
   - Fetches order details and status.
-- `DELETE /clear-cart/:userId`
+- `DELETE /clear-cart/:id`
   - Clears active cart items.
 
 ## Not Implemented Yet
@@ -210,7 +215,7 @@ Admin checks are currently simulated using `x-admin` header.
 
 OTP expiry fields exist, but expiry enforcement is not yet implemented in verify flow.
 
-Cart and order APIs are implemented using the reordered route flow documented above.
+The Cart and Order APIs were implemented using the revised route flow documented above. This adjustment was necessary because the original instruction sequence was not accurately captured and was only identified during the API planning and development phase.
 
 ## 5. Scalability Thoughts (100 → 10,000+ Users)
 
@@ -235,3 +240,6 @@ Move OTP delivery to a background job queue (e.g., BullMQ + Redis) for better la
 Add rate limiting for signup and OTP verification endpoints to reduce abuse and burst load. (Rate-limit verification attempts).
 
 Add observability: structured logs, latency metrics, error-rate monitoring, and alerts.
+
+## Project Images
+
