@@ -1,4 +1,4 @@
-# Chuks Kitchen Backend
+# Chuks Kitchen Backend.
 
 ## Project Status & Documentation Scope
 
