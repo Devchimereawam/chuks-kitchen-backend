@@ -243,3 +243,22 @@ Add observability: structured logs, latency metrics, error-rate monitoring, and 
 
 ## Project Images
 
+<img width="1161" height="548" alt="Screenshot 2026-02-26 at 09 36 49" src="https://github.com/user-attachments/assets/0d45be98-4482-42a8-bdcd-b1ffafa4fed9" />
+
+<img width="553" height="564" alt="Screenshot 2026-02-26 at 09 37 10" src="https://github.com/user-attachments/assets/c5ac60cc-39f4-4120-b841-67a166fabf56" />
+
+<img width="1194" height="502" alt="Screenshot 2026-02-26 at 09 37 31" src="https://github.com/user-attachments/assets/759bbfbf-65da-4a2f-8ae8-241137c1273c" />
+
+<img width="1141" height="441" alt="Screenshot 2026-02-26 at 09 37 50" src="https://github.com/user-attachments/assets/3181e5ea-7a67-4691-a9ca-2ce47a775516" />
+
+<img width="1138" height="479" alt="Screenshot 2026-02-26 at 09 38 03" src="https://github.com/user-attachments/assets/4b4731e5-efe8-44ac-92ce-1f26f1c11c05" />
+
+<img width="1159" height="428" alt="Screenshot 2026-02-26 at 09 38 17" src="https://github.com/user-attachments/assets/6f6f8cc1-2aac-4010-86d4-5e51cf358f90" />
+
+<img width="1139" height="509" alt="Screenshot 2026-02-26 at 09 38 47" src="https://github.com/user-attachments/assets/95321757-e9c5-4396-a47a-ebe8570362e1" />
+
+<img width="1134" height="506" alt="Screenshot 2026-02-26 at 09 39 04" src="https://github.com/user-attachments/assets/ee8e605b-09ee-45e9-875c-29a1b3b345d9" />
+
+<img width="1157" height="481" alt="Screenshot 2026-02-26 at 09 39 29" src="https://github.com/user-attachments/assets/7c8a8dcb-0ea3-43de-bf65-b056acc29a46" />
+
+<img width="541" height="531" alt="Screenshot 2026-02-26 at 09 39 53" src="https://github.com/user-attachments/assets/6b6e6583-f264-488b-b808-31eb9512e89e" />
