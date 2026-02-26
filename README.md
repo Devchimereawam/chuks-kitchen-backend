@@ -245,6 +245,7 @@ Add observability: structured logs, latency metrics, error-rate monitoring, and 
 
 <img width="686" height="489" alt="Screenshot 2026-02-26 at 10 37 31" src="https://github.com/user-attachments/assets/8e7b0f88-785c-435f-8810-317641f2e99c" />
 
+### Embedded code:
 
 <iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVG6BwKzI=/?embedMode=view_only_without_ui&moveToViewport=-833,-859,2065,1110&embedId=633000995513" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
 
