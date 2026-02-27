@@ -328,6 +328,11 @@ Add observability: structured logs, latency metrics, error-rate monitoring, and 
 
 ## FLOW CHART
 
+<img width="366" height="605" alt="Screenshot 2026-02-27 at 15 23 50" src="https://github.com/user-attachments/assets/b4f7e716-897a-4131-8e23-468005e70034" />
+
+<img width="365" height="657" alt="Screenshot 2026-02-27 at 15 24 09" src="https://github.com/user-attachments/assets/4bc9568a-aeac-46ce-ac30-66051d88c2e4" />
+
+<img width="386" height="672" alt="Screenshot 2026-02-27 at 15 24 33" src="https://github.com/user-attachments/assets/39adbfc1-a144-47d9-a4df-d37770872481" />
 
 
 
