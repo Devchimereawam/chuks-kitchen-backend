@@ -274,3 +274,136 @@ https://miro.com/app/live-embed/uXjVG6BwKzI=/?embedMode=view_only_without_ui&mov
 <img width="1157" height="481" alt="Screenshot 2026-02-26 at 09 39 29" src="https://github.com/user-attachments/assets/7c8a8dcb-0ea3-43de-bf65-b056acc29a46" />
 
 <img width="541" height="531" alt="Screenshot 2026-02-26 at 09 39 53" src="https://github.com/user-attachments/assets/6b6e6583-f264-488b-b808-31eb9512e89e" />
+
+
+## TEST FLOW
+    USING POSTMAN 
+
+Run backend first:
+
+node app.js
+
+1. GET http://localhost:3000/
+Expected: 200, text response.
+
+
+2. GET http://localhost:3000/status
+Expected: 200, JSON with status: "Running".
+
+
+3. POST http://localhost:3000/auth/signup (Signup)
+
+Headers: Content-Type: application/json
+Body:
+{
+  "email": "qa.tester@example.com",
+  "password": "Pass1234!",
+  "firstName": "QA",
+  "lastName": "Tester",
+  "role": "customer"
+}
+
+Expected: 201, user created, OTP returned in non-production.
+
+
+4. POST http://localhost:3000/auth/signup/verify-otp (Verify with OTP)
+
+Headers: Content-Type: application/json
+Body:
+{
+  "userId": "userId",
+  "otp": "otp"
+}
+
+Expected: 200, message OTP verified successfully.
+
+
+5. GET http://localhost:3000/auth/foods (View foods)
+
+Expected: 200, data array.
+
+
+6. POST http://localhost:3000/auth/foods (Add food as admin)
+
+Headers: Content-Type: application/json
+x-admin: true
+
+Body:
+{
+  "name": "Jollof Rice + Chicken",
+  "price": 4500,
+  "isAvailable": true
+}
+
+Expected: 201.
+
+
+7. POST http://localhost:3000/auth/foods (Unavailable food)
+
+Body:
+{
+  "name": "Pepper Soup",
+  "price": 3000,
+  "isAvailable": false
+}
+
+Expected: 201.
+
+
+8. POST http://localhost:3000/auth/cart/items (Add to cart)
+
+Headers: Content-Type: application/json
+Body:
+{
+  "userId": "userId",
+  "foodId": "foodId1",
+  "quantity": 2
+}
+
+Expected: 201, data.status = "cart".
+
+
+9. GET http://localhost:3000/auth/cart/{{userId}} (View user cart)
+
+Expected: 200, cart with items.
+
+
+10. POST http://localhost:3000/auth/cart/items (Add another item to cart)
+Body:
+
+{
+  "userId": "userId",
+  "foodId": "foodId2",
+  "quantity": 1
+}
+
+Expected: 201, quantity increases.
+
+
+11. POST http://localhost:3000/auth/orders (Place order)
+
+Body:
+{
+  "userId": "userId"
+}
+
+Expected: 201, status becomes placed.
+
+
+12. GET http://localhost:3000/auth/orders/{{placedOrderId}} (Place the order)
+
+Expected: 200, placed order details.
+
+Note: Placed order id is gotten from when you view order details in step 11.
+
+
+13. GET http://localhost:3000/auth/cart/{{userId}}
+
+Expected: 200, empty cart view (because placed order is no longer active cart).
+
+Add another food item from step 6 to test the clear cart feature.
+
+
+14. DELETE http://localhost:3000/auth/clear-cart/{{userId}}
+
+Expected: 200, cleared: true.
