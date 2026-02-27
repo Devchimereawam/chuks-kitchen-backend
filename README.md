@@ -243,7 +243,8 @@ Add observability: structured logs, latency metrics, error-rate monitoring, and 
 
 ## Data Modeling (ERD)
 
-<img width="908" height="614" alt="Screenshot 2026-02-26 at 10 43 31" src="https://github.com/user-attachments/assets/7c62a8e0-9004-43eb-b816-335739543d5a" />
+<img width="729" height="612" alt="Screenshot 2026-02-27 at 14 11 32" src="https://github.com/user-attachments/assets/988005f1-f763-43c0-a4e2-b8a2d75e8bbf" />
+
 
 ### Embedded code:
 
