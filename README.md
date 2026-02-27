@@ -277,10 +277,69 @@ https://miro.com/app/live-embed/uXjVG6BwKzI=/?embedMode=view_only_without_ui&mov
 <img width="541" height="531" alt="Screenshot 2026-02-26 at 09 39 53" src="https://github.com/user-attachments/assets/6b6e6583-f264-488b-b808-31eb9512e89e" />
 
 
+
+
+## Setup and Test Guide
+
+This guide explains how to run and test the API, including how to use your own MongoDB database.
+
+1) Prerequisites
+
+a. Node.js 18+ and npm
+b. MongoDB Atlas account
+c. Postman
+
+
+2) Project Setup
+
+bash
+npm install
+cp .env.example .env
+
+Update .env values:
+
+.env:
+
+PORT=3000
+MONGODB_URI=mongodb://127.0.0.1:27017/chuks-kitchen-backend
+JWT_SECRET=your-secret-key
+DOTENV_CONFIG_QUIET=true
+
+
+3) Use Your Own Database
+
+MongoDB Atlas
+
+Create a cluster.
+Create a DB user (username/password).
+Allow your IP in Network Access.
+Copy connection string.
+
+Put it in .env:
+
+.env:
+
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<db-name>?retryWrites=true&w=majority
+
+
+4) Start the API
+
+bash
+node app.js
+
+Expected terminal output includes Mongo connection and server start logs.
+
+Base URL:
+http://localhost:3000
+
+
+
+
+
 ## TEST FLOW
     USING POSTMAN 
 
-Run backend first:
+Run backend:
 
 node app.js
 
