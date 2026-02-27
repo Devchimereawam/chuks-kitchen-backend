@@ -300,20 +300,24 @@ Update .env values:
 
 .env:
 
-PORT=3000
-MONGODB_URI=mongodb://127.0.0.1:27017/chuks-kitchen-backend
-JWT_SECRET=your-secret-key
-DOTENV_CONFIG_QUIET=true
+## Environment Variables
+
+| Variable | Example Value
+|---|---|
+| `PORT=` | `3000` |
+| `MONGODB_URI=` | `mongodb://127.0.0.1:27017/chuks-kitchen-backend` |
+| `JWT_SECRET=` | `your-secret-key` |
+| `DOTENV_CONFIG_QUIET=` | `true` |
 
 
 3) Use Your Own Database
 
-    MongoDB Atlas
+  MongoDB Atlas
 
-    Create a cluster.
-    Create a DB user (username/password).
-    Allow your IP in Network Access.
-    Copy connection string.
+  Create a cluster.
+  Create a DB user (username/password).
+  Allow your IP in Network Access.
+  Copy connection string.
 
 Put it in .env:
 
