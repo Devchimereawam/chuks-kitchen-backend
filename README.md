@@ -1,6 +1,6 @@
 # Chuks Kitchen Backend.
 
-## Project Status & Documentation Scope
+## 1) Project Status & Documentation Scope
 
 This README represents a comprehensive and authoritative reflection of:
 
@@ -12,12 +12,82 @@ This README represents a comprehensive and authoritative reflection of:
 
 This document serves both as a technical reference and as an architectural explanation of design decisions, implementation trade-offs, and forward-looking scalability considerations.
 
+This backend supports:
+- User signup with email or phone and OTP verification.
+- Food browsing and simulated admin food creation.
+- Cart actions (add, view, clear).
+- Order creation from cart and order detail retrieval.
+
+## 2) Tech Stack
+
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT (`jsonwebtoken`)
+- Dotenv
+
+## 3) Run Locally
+
+```bash
+npm install
+cp .env.example .env
+node app.js
+```
+
+Default base URL: `http://localhost:3000`
+
+## 4) Environment Variables
+
+```env
+PORT=3000
+MONGODB_URI=mongodb://127.0.0.1:27017/chuks-kitchen-backend
+DOTENV_CONFIG_QUIET=true
+JWT_SECRET=your-secret-key
+```
+
 ## Current Codebase Structure
 
 <img width="669" height="267" alt="Screenshot 2026-02-24 at 12 16 02" src="https://github.com/user-attachments/assets/a71a3295-0593-450a-af41-054c33df87c2" />
 
 
-## Current Implemented Endpoints
+## Current Implemented API Endpoints
+
+### Health APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | API running text message |
+| GET | `/status` | Backend status JSON |
+
+### Auth APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/auth/signup` | Create unverified user and OTP |
+| POST | `/auth/signup/verify-otp` | Verify OTP and return JWT |
+
+### Food APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/auth/foods` | Fetch all foods (newest first) |
+| POST | `/auth/foods` | Create food item (requires header `x-admin: true`) |
+
+### Cart APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/auth/cart/items` | Add meal to cart |
+| GET | `/auth/cart/:userId` | View active cart |
+| DELETE | `/auth/clear-cart/:userId` | Clear active cart |
+
+### Order APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/auth/orders` | Create order from active cart |
+| GET | `/auth/orders/:id` | Fetch placed order details/status |
 
 ### Health
 
@@ -54,6 +124,7 @@ This document serves both as a technical reference and as an architectural expla
   - Fetches order details and status.
 - `DELETE /clear-cart/:id`
   - Clears active cart items.
+
 
 ## Not Implemented Yet
 
@@ -97,6 +168,7 @@ Backend returns foods from the database sorted by newest first.
 
 Admin adds food items via `POST /auth/foods` with header `x-admin: true`.
 
+
 ## 2. Flow Explanation (Step-by-Step + Design Reasons)
 
 ### A) User Registration & OTP Verification Flow
@@ -139,6 +211,7 @@ Backend fetches user by `userId`, checks OTP hash match, sets `otpVerified = tru
 
 Why: OTP should be one-time use and removed after success.
 
+
 ### B) Food Browsing & Admin Food Management Flow
 
 ### Customer
@@ -159,7 +232,21 @@ Backend creates food `{name, price, isAvailable}`.
 
 Why: Restricts create access to simulated admin flow.
 
-### C) Cart and Order Flow Reorder (Instruction vs Final)
+
+### C) Data Needed Per Screen
+
+| Screen | Required Data | Endpoint(s) |
+|---|---|---|
+| Signup | `email` or `phone`, `password`, optional `firstName`, `lastName`, `role` | `POST /auth/signup` |
+| OTP Verify | `userId`, `otp` | `POST /auth/signup/verify-otp` |
+| Food List | None | `GET /auth/foods` |
+| Admin Food Form | `name`, `price`, `isAvailable` + `x-admin: true` | `POST /auth/foods` |
+| Cart | `userId`, `foodId`, `quantity` | `POST /auth/cart/items`, `GET /auth/cart/:userId`, `DELETE /auth/clear-cart/:userId` |
+| Checkout | `userId` | `POST /auth/orders` |
+| Order Detail | `id` | `GET /auth/orders/:id` |
+
+
+### D) Order Flow Reorder (Instruction vs Final)
 
 Initial instruction order captured during API planning:
 
@@ -185,37 +272,34 @@ Final reordered and implemented flow:
 - Option F — Clear cart API:
   - `DELETE /clear-cart/:userId`
 
+
 ## 3. Edge Case Handling (Failures, Exceptions, Unusual Scenarios)
 
-### Registration & Verification
+Edge Case Handling
 
-Duplicate email/phone: `409 Conflict`
+| Scenario | Status |
+|---|---|
+| Duplicate email or phone | `409` |
+| Invalid role | `400` |
+| Admin signup without `x-admin: true` | `403` |
+| Invalid OTP | `400` |
+| Missing user in OTP/cart/order flows | `404` |
+| Unverified user ordering/cart actions | `403` |
+| Invalid food id / missing food | `404` |
+| Unavailable food | `409` |
+| Empty cart on checkout | `400` |
+| Invalid order id / order not found | `404` |
 
-Invalid role: `400 Bad Request`
 
-Admin role requested without admin simulation header: `403 Forbidden`
+## 4. Assumptions and Known Gaps
 
-Invalid OTP: `400 Bad Request`
+- Admin checks are currently simulated using header `x-admin: true`.
+- JWT authorization middleware is not yet enforced on routes.
+- OTP is included in signup response only outside production.
+- OTP expiry/attempt lock fields exist but are not fully enforced in verify logic.
+- Admin order status update/cancel APIs are not implemented.
+- The Cart and Order APIs were implemented using the revised route flow documented above. This adjustment was necessary because the original instruction sequence was not accurately captured and was only identified during the API planning and development phase.
 
-User not found during OTP verification: `404 Not Found`
-
-### Food
-
-Non-admin trying to create food: `403 Forbidden`
-
-Unexpected server/database errors: `500 Internal Server Error`
-
-## 4. Assumptions (Due to Missing Info)
-
-OTP is exposed in non-production signup response for testing.
-
-Authorization middleware for protected routes is not active yet.
-
-Admin checks are currently simulated using `x-admin` header.
-
-OTP expiry fields exist, but expiry enforcement is not yet implemented in verify flow.
-
-The Cart and Order APIs were implemented using the revised route flow documented above. This adjustment was necessary because the original instruction sequence was not accurately captured and was only identified during the API planning and development phase.
 
 ## 5. Scalability Thoughts (100 → 10,000+ Users)
 
