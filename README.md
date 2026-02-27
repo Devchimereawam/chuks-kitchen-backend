@@ -325,6 +325,12 @@ Add rate limiting for signup and OTP verification endpoints to reduce abuse and 
 
 Add observability: structured logs, latency metrics, error-rate monitoring, and alerts.
 
+
+## FLOW CHART
+
+
+
+
 ## Data Modeling (ERD)
 
 <img width="729" height="612" alt="Screenshot 2026-02-27 at 14 11 32" src="https://github.com/user-attachments/assets/988005f1-f763-43c0-a4e2-b8a2d75e8bbf" />
@@ -337,6 +343,7 @@ Add observability: structured logs, latency metrics, error-rate monitoring, and 
 ### Miro Link:
 
 https://miro.com/app/live-embed/uXjVG6BwKzI=/?embedMode=view_only_without_ui&moveToViewport=-833%2C-859%2C2065%2C1110&embedId=633000995513
+
 
 ## Project Images
 
