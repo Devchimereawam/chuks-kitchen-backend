@@ -335,7 +335,6 @@ Add observability: structured logs, latency metrics, error-rate monitoring, and 
 <img width="386" height="672" alt="Screenshot 2026-02-27 at 15 24 33" src="https://github.com/user-attachments/assets/39adbfc1-a144-47d9-a4df-d37770872481" />
 
 
-
 ## Data Modeling (ERD)
 
 <img width="729" height="612" alt="Screenshot 2026-02-27 at 14 11 32" src="https://github.com/user-attachments/assets/988005f1-f763-43c0-a4e2-b8a2d75e8bbf" />
