@@ -308,12 +308,12 @@ DOTENV_CONFIG_QUIET=true
 
 3) Use Your Own Database
 
-MongoDB Atlas
+    MongoDB Atlas
 
-Create a cluster.
-Create a DB user (username/password).
-Allow your IP in Network Access.
-Copy connection string.
+    Create a cluster.
+    Create a DB user (username/password).
+    Allow your IP in Network Access.
+    Copy connection string.
 
 Put it in .env:
 
