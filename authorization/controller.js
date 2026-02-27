@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const User = require('../common/models/User');
 const { OTP_CONFIG, USER_ROLES } = require('../common/middlewares/IsAuthenticated');
 
-// Hashing using crypto.
+// Hashing using bcrypt.
 const encryptValue = (password) =>
     crypto.createHash('sha256').update(password).digest('hex');
 
