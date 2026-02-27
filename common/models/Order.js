@@ -7,8 +7,7 @@ const OrderItemSchema = new mongoose.Schema(
         quantity: { type: Number, required: true, min: 1 },
         unitPriceSnapshot: { type: Number, required: true, min: 0 },
         addedAt: { type: String, default: () => new Date().toISOString() },
-    },
-    { _id: false }
+    }
 );
 
 const OrderSchema = new mongoose.Schema({

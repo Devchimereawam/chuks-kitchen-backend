@@ -13,6 +13,7 @@ const findActiveCart = (userId) =>
 
 const toOrderView = (order) => {
     const items = order.items.map((item) => ({
+        orderItemId: item._id ? String(item._id) : null,
         foodId: item.foodId,
         foodName: item.foodNameSnapshot,
         unitPrice: item.unitPriceSnapshot,
